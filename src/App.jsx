@@ -37,6 +37,7 @@ export default function App()  {
           <SecureRoute exact path={"/contact"} component={container.ContactPage} />
           <SecureRoute exact path={"/create"} component={container.CreatePage} />
           <SecureRoute exact path={"/edit/:id"} component={container.EditPage} />
+          <Route path="*" component={()=> "404 NOT FOUND"} />
         </Switch>
       </Router>
     </div>
