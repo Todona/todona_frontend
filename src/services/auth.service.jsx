@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const API_URL = process.env.API_URL + '/api/auth/';
+const API_URL = 'https://backendtodona.herokuapp.com/api/auth/';
 
 class AuthService {
     login(username, password) {
+        console.log(API_URL)
         return axios.post(API_URL + 'signin', {
             username, 
             password

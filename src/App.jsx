@@ -15,8 +15,8 @@ function SecureRoute(props) {
   return(
     <Route path={props.path} 
       render = {
-        data => authentication.getLogInStatus() ? (
-          <props.component /> ) : (
+        data => authentication.getLogInStatus(data) ? (
+          <props.component {...data}></props.component> ) : (
           <Redirect to={{pathname: '/login'}}></Redirect>
         )
       }>
@@ -32,11 +32,11 @@ export default function App()  {
         <Switch>
           <Route exact path="/login" component={container.LoginPage} />
           <Route exact path="/register" component={container.RegisterPage} />
-          <SecureRoute path="/" component={container.TodoPage} />
-          <SecureRoute path="/done" component={container.DonePage} />
-          <SecureRoute path="/contact" component={container.ContactPage} />
-          <SecureRoute path="/create" component={container.CreatePage} />
-          <SecureRoute path="/edit/:id" component={container.EditPage} />
+          <SecureRoute exact path={"/"} component={container.TodoPage} />
+          <SecureRoute exact path={"/done"} component={container.DonePage} />
+          <SecureRoute exact path={"/contact"} component={container.ContactPage} />
+          <SecureRoute exact path={"/create"} component={container.CreatePage} />
+          <SecureRoute exact path={"/edit/:id"} component={container.EditPage} />
         </Switch>
       </Router>
     </div>

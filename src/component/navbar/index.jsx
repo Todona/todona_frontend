@@ -60,13 +60,13 @@ const Navbar = () => {
 
       { !currentUser ? (
           <div className="link-page">
-            <Link to="/contact" onClick={() => setMode(2)} style={mode === "/contact" ? { color: "#009BFF" } : null}>Contact</Link>
             <Link to="/login" onClick={() => setMode(3)} style={mode === "/login" ? { color: "#009BFF" } : null}>Sign in</Link>
             <Link to="/register" onClick={() => setMode(4)}><button className="create-button">Sign up</button></Link>
           </div>
       ) : (
           <div className="link-page">
             <Link to="/create" onClick={() => setMode(5)}><button className="create-button">New Task</button></Link>
+            <Link to="/contact" onClick={() => setMode(2)} style={mode === "/contact" ? { color: "#009BFF" } : null}>Contact</Link>
             <Link to="/login" onClick={() => logOut()}>Log out</Link>
           </div>
       )}
