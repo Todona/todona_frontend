@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "../component/card";
+import Card from "../../component/card";
 import {useHistory} from "react-router-dom"
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
 
 const CreatePage = () => {
   const history = useHistory()

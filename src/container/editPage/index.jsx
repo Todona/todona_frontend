@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Card from "../component/card";
+import Card from "../../component/card";
 import { useHistory, useParams } from "react-router-dom";
 
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
 
 const EditPage = () => {
   const history = useHistory();

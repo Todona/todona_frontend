@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Card from "../component/card";
-import { useHistory } from "react-router-dom";
+import Card from "../../component/card";
 
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
 
-const TodoPage = () => {
-  const history = useHistory();
+const DonePage = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [tasks, setTasks] = useState([]);
 
   const fetchData = async () => {
-    const res = await UserService.getAllTasks();
+    const res = await UserService.getDoneTasks();
     setTasks(res.data);
   };
 
@@ -18,14 +16,10 @@ const TodoPage = () => {
     fetchData();
   }, []);
 
-  const onEdit = (id) => {
-    history.push(`/edit/${id}`);
-  };
-
-  const onDone = async (id) => {
+  const onUnDone = async (id) => {
     try {
       await UserService.updateTasks(id, {
-        isFinished: true
+        isFinished: false
       });
 
       const newTasks = tasks.filter(ele => ele._id !== id);
@@ -33,7 +27,7 @@ const TodoPage = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const onDelete = async (id) => {
     try {
@@ -44,27 +38,26 @@ const TodoPage = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <div className="TodoPage">
-      <h1 style={{ fontSize: "48px", margin: "0.5rem 0" }}>Todo</h1>
+      <h1 style={{ fontSize: "48px", margin: "0.5rem 0" }}>Done</h1>
       <div className="card-container">
         {tasks.length !== 0 ? tasks.map((ele, i) => (
           <Card
-            mode={"default"}
-            onDone={() => onDone(ele._id)}
-            onEdit={() => onEdit(ele._id)}
+            mode={"done"}
+            onUnDone={() => onUnDone(ele._id)}
             onDelete={() => onDelete(ele._id)}
             detail={ele}
             selected={selectedCard === i}
             key={i}
             onClick={() => setSelectedCard(i)}
           />
-        )) : <p style={{ textAlign: "center" }}>Hooray! You have no more task todo.</p>}
+        )) : <p style={{ textAlign: "center" }}>You haven't done any task.</p>}
       </div>
     </div>
   );
 };
 
-export default TodoPage;
+export default DonePage;
