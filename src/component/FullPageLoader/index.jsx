@@ -1,6 +1,6 @@
-  
 import React from "react";
-import Spinner from "resources/images/spinner.gif";
+import Spinner from "../../assets/images/spinner_5.gif";
+import './FullPageLoader.css';
 
 const FullPageLoader = () => {
     return (

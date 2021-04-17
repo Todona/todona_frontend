@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from "react-router-dom";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-import { isPossiblePhoneNumber } from 'react-phone-number-input';
 import "./register.css";
+import useFullPageLoader from "../../hooks/useFullPageLoader";
 
 import AuthService from "../../services/auth.service";
 
@@ -19,7 +19,7 @@ const required = value => {
   }
 };
 
-const email = value => {
+const vemail = value => {
   if (!isEmail(value)) {
     return (
       <div className="alert alert-waning" role="alert">
@@ -49,60 +49,46 @@ const vpassword = value => {
   }
 };
 
-export default class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.handleRegister = this.handleRegister.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this);
-    this.confirmPassword = this.confirmPassword.bind(this);
+const Register= () => {
+  const [form, setForm] = useState();
+  const [checkBtn, setCheckBtn] = useState();
+  const history = useHistory();
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [successful, setSuccess] = useState(false);
+  const [message, setMessage] = useState("");
 
-    this.state = {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      successful: false,
-      message: ""
-    };
+  const [loader, showLoader, hideLoader] = useFullPageLoader();
+
+  const setState = (message) => {
+    setSuccess(false);
+    setMessage(message);
   }
 
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value,
-      message: "",
-      successful: false
-    });
+  const onChangeUsername = (e) => {
+    setUserName(e.target.value);
+    setState("");
   }
 
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value,
-      message: "",
-      successful: false
-    });
+  const onChangeEmail = (e) => {
+    setEmail(e.target.value);
+    setState("");
   }
 
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value,
-      message: "",
-      successful: false
-    });
+  const onChangePassword = async (e) => {
+    await setPassword(e.target.value);
+    setState("");
   }
 
-  onChangeConfirmPassword(e) {
-    this.setState({
-      confirmPassword: e.target.value,
-      message: "",
-      successful: false
-    });
+  const onChangeConfirmPassword = async (e) => {
+    await setConfirmPassword(e.target.value);
+    setState("");
   }
 
-  confirmPassword(e) {
-    if (this.state.password !== this.state.confirmPassword) {
+  const onConfirmPassword = (e) => {
+    if (password !== confirmPassword) {
       return (
         <div className="alert alert-waning" role="alert">
           The password doesn't match.
@@ -111,29 +97,24 @@ export default class Register extends Component {
     }
   }
 
-  handleRegister(e) {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
-    this.setState({
-      message: "",
-      successful: false
-    });
+    setState("");
+    await form.validateAll();
+    showLoader();
 
-    this.form.validateAll();
-
-    if (this.checkBtn.context._errors.length === 0) {
+    if (checkBtn.context._errors.length === 0) {
       AuthService.register(
-        this.state.username,
-        this.state.email,
-        this.state.password
+        username,
+        email,
+        password
       ).then(
         response => {
-          this.setState({
-            message: response.data.message,
-            successful: true
-          });
+          setMessage(response.data.message);
+          setSuccess(true);
 
-          this.props.history.push("/login");
+          history.push("/login");
           window.location.reload();
         },
         error => {
@@ -144,120 +125,122 @@ export default class Register extends Component {
             error.message ||
             error.toString();
 
-          this.setState({
-            successful: false,
-            message: resMessage
-          });
+          setState(resMessage);
         }
-      );
+      ).then(() => {
+        hideLoader();
+      });
+    } else {
+      hideLoader();
     }
   }
-
-  render() {
-    return (
-      <div>
-        <div className="header">
-          <i className="far fa-calendar-check" style={{fontSize: "80px"}}></i>&nbsp;&nbsp;TODONA
-          <br /><hr />
-        </div>
-        <Form
-          onSubmit={this.handleRegister}
-          ref={c => {
-            this.form = c;
-          }}
-        >
-          {!this.state.successful && (
-            <div className="box">
-              <h1>Register</h1>
-              <br /><hr /><br /><br />
-              <div className="form-group">
-                <label>Username</label>
-                <label type="required">*</label>
-                <Input
-                  type="text"
-                  placeholder="Username"
-                  name="username"
-                  value={this.state.username}
-                  onChange={this.onChangeUsername}
-                  validations={[required, vusername]}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Email</label>
-                <label type="required">*</label>
-                <Input
-                  type="text"
-                  placeholder="Email"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.onChangeEmail}
-                  validations={[required, email]}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Password</label>
-                <label type="required">*</label>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={this.state.password}
-                  onChange={this.onChangePassword}
-                  validations={[required, vpassword]}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Confirm Password</label>
-                <label type="required">*</label>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={this.state.confirmPassword}
-                  onChange={this.onChangeConfirmPassword}
-                  validations={[required, this.confirmPassword]}
-                />
-              </div>
-
-              <br />
-              {this.state.message && (
-                <div className="form-group">
-                  <div
-                    className={
-                      this.state.successful
-                        ? "alert alert-success"
-                        : "alert alert-danger"
-                    }
-                    role="alert"
-                  >
-                    {this.state.message}
-                  </div>
-                </div>
-              )}
-
-              <div className="form-group">
-                <br />
-                <button className="btn btn-primary btn-block">Sign Up</button>
-              </div>
-
-              <div className="link-page">
-                Have an account ? 
-                <Link to="/login" className="brand">Sign in</Link>
-              </div>
-            </div>
-          )}
-
-          <CheckButton
-            style={{ display: "none" }}
-            ref={c => {
-              this.checkBtn = c;
-            }}
-          />
-        </Form>
+  
+  return (
+    <>
+      <div className="header">
+        <i className="far fa-calendar-check" style={{fontSize: "80px"}}></i>&nbsp;&nbsp;TODONA
+        <br /><hr />
       </div>
-    );
-  }
+      <Form className="box"
+        onSubmit={handleRegister}
+        ref={c => {
+          setForm(c);
+        }}
+      >
+        {!successful && (
+          <div>
+            <h1>Register</h1>
+            <br /><hr /><br /><br />
+            <div className="form-group">
+              <label>Username</label>
+              <label type="required">*</label>
+              <Input
+                type="text"
+                placeholder="Username"
+                name="username"
+                value={username}
+                onChange={onChangeUsername}
+                validations={[required, vusername]}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Email</label>
+              <label type="required">*</label>
+              <Input
+                type="text"
+                placeholder="Email"
+                name="email"
+                value={email}
+                onChange={onChangeEmail}
+                validations={[required, vemail]}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Password</label>
+              <label type="required">*</label>
+              <Input
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={password}
+                onChange={onChangePassword}
+                validations={[required, vpassword]}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Confirm Password</label>
+              <label type="required">*</label>
+              <Input
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={confirmPassword}
+                onChange={onChangeConfirmPassword}
+                validations={[required, onConfirmPassword]}
+              />
+            </div>
+
+            <br />
+            {message && (
+              <div className="form-group">
+                <div
+                  className={
+                    successful
+                      ? "alert alert-success"
+                      : "alert alert-danger"
+                  }
+                  role="alert"
+                >
+                  {message}
+                </div>
+              </div>
+            )}
+
+            <div className="form-group">
+              <br />
+              <button className="btn btn-primary btn-block">Sign Up</button>
+            </div>
+
+            <div className="link-page">
+              Have an account ? 
+              <Link to="/login" className="brand">Sign in</Link>
+            </div>
+          </div>
+        )}
+
+        <CheckButton
+          style={{ display: "none" }}
+          ref={c => {
+            setCheckBtn(c);
+          }}
+        />
+      </Form>
+      {loader}
+    </>
+  );
 }
+
+export default Register;

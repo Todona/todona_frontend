@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
-import { useHistory } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
 
 const Navbar = () => {
-  const history = useHistory();
   const [mode, setMode] = useState(0);
   const [currentUser, setCurrentUser] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
