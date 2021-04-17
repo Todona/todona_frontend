@@ -1,32 +1,26 @@
-body{
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: #34495e;
-  }
-  .login{
+.box{
     width: 40vh;
     padding: 50px 80px;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 70%;
     transform: translate(-50%,-50%);
     background: #191919;
-    text-align: center;
+    text-align: left;
   }
-  .login h1{
+  .box h1{
     color: white;
     text-transform: uppercase;
     font-weight: 500;
   }
-  .login input[type = "text"],.login input[type = "password"]{
+  .box input[type = "text"],.box input[type = "password"]{
     border:0;
     background: none;
     display: block;
     margin: 20px auto;
     text-align: center;
     border: 2px solid #3498db;
-    padding: 20px 10px;
+    padding: 14px 10px;
     width: 300px;
     outline: none;
     color: white;
@@ -34,11 +28,11 @@ body{
     transition: 0.25s;
     font-size: 18px;
   }
-  .login input[type = "text"]:focus,.login input[type = "password"]:focus{
+  .box input[type = "text"]:focus,.box input[type = "password"]:focus{
     width: 360px;
     border-color: #2ecc71;
   }
-  .login button{
+  .box button{
     border:0;
     background: none;
     display: block;
@@ -53,36 +47,45 @@ body{
     cursor: pointer;
     font-size: 16px;
   }
-  .login button:hover{
+  .box button:hover{
     background: #2ecc71;
+  }
+  .alert-waning{
+    color: red;
+    text-align: right;
+    margin: 0;
   }
   .alert-danger{
     color: red;
-    text-align: right;
-    padding-bottom: -20px;
+    text-align: center;
+    margin-bottom: 0;
   }
-  .login .link-page{
+  .box .link-page{
     color: white;
     font-size: 16px;
     text-align: left;
     padding-top: 30px;
   }
-  .login .link-page .brand {
+  .box .link-page .brand {
     color: rgb(234, 238, 12);
     padding-left: 10px;
   }
-  .login .form-group label{
+  .box .form-group label{
     color: white;
     font-size: 16px;
     padding-right: 10px;
   }
+  .box .form-group label[type = "required"]{
+    color: red;
+    font-size: 16px;
+  }
 
-  .login-header{
+  .header{
     width: 45vh;
     padding: 80px 0px;
     position: absolute;
-    top: 15%;
-    left: 50%;
+    top: 50%;
+    left: 25%;
     transform: translate(-50%,-50%);
     background: transparent;
     text-align: center;

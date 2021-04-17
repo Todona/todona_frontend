@@ -84,13 +84,20 @@ export default class Login extends Component {
     render() {
         return (
           <div>
-            <Form class="box"
+            <div className="login-header">
+            <i className="far fa-calendar-check" style={{fontSize: "80px"}}></i>&nbsp;&nbsp;TODONA
+            <br /><hr />
+            </div>
+            <Form class="login"
               onSubmit={this.handleLogin}
               ref={c => {
                 this.form = c;
               }}
             >
               <h1>Login</h1>
+              <br />
+              <hr />
+              <br />
               <div className="form-group">
                 <Input
                   type="text"
