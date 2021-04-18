@@ -3,7 +3,7 @@ import "./verifyEmailPage.css"
 
 const VerifyEmailPage = () => {
     return (
-        <div className="header">
+        <div className="verify-header">
             <i className="far fa-calendar-check" style={{fontSize: "80px"}}></i>&nbsp;&nbsp;TODONA
             <br /><hr />
         </div>

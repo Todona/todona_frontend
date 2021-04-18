@@ -140,7 +140,7 @@ const Register= () => {
   }
   
   return (
-    <div className="body">
+    <div>
       <div className="header">
         <i className="far fa-calendar-check" style={{fontSize: "80px"}}></i>&nbsp;&nbsp;TODONA
         <br /><hr />
