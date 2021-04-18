@@ -23,8 +23,10 @@ const EditPage = () => {
   }
 
   const fetchData = async () => {
+    showLoader();
     const res = await UserService.getTasks(id);
     setTask(res.data);
+    hideLoader();
   };
 
   useEffect(() => {
