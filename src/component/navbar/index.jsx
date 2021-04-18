@@ -8,21 +8,19 @@ import useFullPageLoader from "../../hooks/useFullPageLoader";
 const Navbar = () => {
   const [mode, setMode] = useState(0);
   const [currentUser, setCurrentUser] = useState();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [loader, showLoader, hideLoader] = useFullPageLoader();
 
   const fetchData = async () => {
-    setMode(window.location.pathname)
-
-    const user = await AuthService.getCurrentUser();
+    setMode(window.location.pathname);
+    showLoader();
+    const user = AuthService.getCurrentUser();
     if (user) {
-      setIsLoggedIn(true);
       setCurrentUser(user);
     } else {
-      setIsLoggedIn(false);
       setCurrentUser();
     }
+    hideLoader();
   };
 
   useEffect(() => {
@@ -41,7 +39,7 @@ const Navbar = () => {
 
   return (
     <div>
-        {isLoggedIn && (
+        {currentUser ? (
         <div className="navbar">
           <div className="content">
             <div className="link-page">
@@ -56,8 +54,9 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-      )}
-      {loader}
+        ) : (
+          loader
+        )}
     </div>
   );
 };

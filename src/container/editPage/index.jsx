@@ -33,7 +33,7 @@ const EditPage = () => {
 
   return (
     <div className="EditPage">
-      <h1 style={{ fontSize: "48px", margin: "0.5rem 0" }}>Edit</h1>
+      <h1 style={{ fontSize: "48px", margin: "0.5rem 0", color: "white" }}>Edit</h1>
       <div className="card-container">
         <Card onSubmit={onSubmit} mode={"edit"} detail={task} />
       </div>

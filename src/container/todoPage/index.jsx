@@ -24,7 +24,6 @@ const TodoPage = () => {
   }, []);
 
   const onEdit = (id) => {
-    showLoader();
     history.push(`/edit/${id}`);
   };
 
@@ -56,6 +55,7 @@ const TodoPage = () => {
     <div className="TodoPage">
       <h1 style={{ fontSize: "48px", margin: "0.5rem 0", color: "white" }}>Todo</h1>
       <hr /> <br /> <br />  
+      {loader}
       <div className="card-container">
         {tasks.length !== 0 ? tasks.map((ele, i) => (
           <Card
@@ -68,9 +68,8 @@ const TodoPage = () => {
             key={i}
             onClick={() => setSelectedCard(i)}
           />
-        )) : <p style={{ textAlign: "center" }}>Hooray! You have no more task todo.</p>}
+        )) : <p style={{ textAlign: "center", color: "white" }}>Hooray! You have no more task todo.</p>}
       </div>
-      {loader}
     </div>
   );
 };

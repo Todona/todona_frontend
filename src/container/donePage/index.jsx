@@ -11,8 +11,10 @@ const DonePage = () => {
   const [loader, showLoader, hideLoader] = useFullPageLoader();
 
   const fetchData = async () => {
+    showLoader();
     const res = await UserService.getDoneTasks();
     setTasks(res.data);
+    hideLoader();
   };
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const DonePage = () => {
             key={i}
             onClick={() => setSelectedCard(i)}
           />
-        )) : <p style={{ textAlign: "center" }}>You haven't done any task.</p>}
+        )) : <p style={{ textAlign: "center", color: "white" }}>You haven't done any task.</p>}
       </div>
       {loader}
     </div>
