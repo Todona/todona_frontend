@@ -1,3 +1,7 @@
+# [Explore my web!!! 🎉🎉](https://radsadorn.netlify.app/)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b7f3d983-8dc3-45db-967b-bc270b731c96/deploy-status)](https://app.netlify.com/sites/radsadorn/deploys)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
