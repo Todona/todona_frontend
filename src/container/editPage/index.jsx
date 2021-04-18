@@ -3,13 +3,17 @@ import Card from "../../component/card";
 import { useHistory, useParams } from "react-router-dom";
 
 import UserService from "../../services/user.service";
+import useFullPageLoader from "../../hooks/useFullPageLoader";
 
 const EditPage = () => {
   const history = useHistory();
   const { id } = useParams();
   const [task, setTask] = useState(null);
 
+  const [loader, showLoader, hideLoader] = useFullPageLoader();
+
   async function onSubmit(task, time) {
+    showLoader();
     var data = {
       task: task,
       time: time,
@@ -33,6 +37,7 @@ const EditPage = () => {
       <div className="card-container">
         <Card onSubmit={onSubmit} mode={"edit"} detail={task} />
       </div>
+      {loader}
     </div>
   );
 };

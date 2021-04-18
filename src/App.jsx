@@ -32,6 +32,7 @@ export default function App()  {
         <Switch>
           <Route exact path="/login" component={container.LoginPage} />
           <Route exact path="/register" component={container.RegisterPage} />
+          <Route exact path="/verify-email" component={container.VerifyEmailPage} />
           <SecureRoute exact path={"/"} component={container.TodoPage} />
           <SecureRoute exact path={"/done"} component={container.DonePage} />
           <SecureRoute exact path={"/contact"} component={container.ContactPage} />

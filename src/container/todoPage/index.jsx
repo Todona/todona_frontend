@@ -3,15 +3,20 @@ import Card from "../../component/card";
 import { useHistory } from "react-router-dom";
 
 import UserService from "../../services/user.service";
+import useFullPageLoader from "../../hooks/useFullPageLoader";
 
 const TodoPage = () => {
   const history = useHistory();
   const [selectedCard, setSelectedCard] = useState(null);
   const [tasks, setTasks] = useState([]);
+  
+  const [loader, showLoader, hideLoader] = useFullPageLoader();
 
   const fetchData = async () => {
+    showLoader();
     const res = await UserService.getAllTasks();
     setTasks(res.data);
+    hideLoader();
   };
 
   useEffect(() => {
@@ -19,6 +24,7 @@ const TodoPage = () => {
   }, []);
 
   const onEdit = (id) => {
+    showLoader();
     history.push(`/edit/${id}`);
   };
 
@@ -48,7 +54,8 @@ const TodoPage = () => {
 
   return (
     <div className="TodoPage">
-      <h1 style={{ fontSize: "48px", margin: "0.5rem 0" }}>Todo</h1>
+      <h1 style={{ fontSize: "48px", margin: "0.5rem 0", color: "white" }}>Todo</h1>
+      <hr /> <br /> <br />  
       <div className="card-container">
         {tasks.length !== 0 ? tasks.map((ele, i) => (
           <Card
@@ -63,6 +70,7 @@ const TodoPage = () => {
           />
         )) : <p style={{ textAlign: "center" }}>Hooray! You have no more task todo.</p>}
       </div>
+      {loader}
     </div>
   );
 };

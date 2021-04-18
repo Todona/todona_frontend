@@ -5,6 +5,7 @@ import DonePage from "./donePage";
 import ContactPage from "./contactPage";
 import CreatePage from "./createPage";
 import EditPage from "./editPage";
+import VerifyEmailPage from "./verifyEmailPage";
 
 const container = {
     LoginPage,
@@ -13,7 +14,8 @@ const container = {
     DonePage,
     ContactPage,
     CreatePage,
-    EditPage
+    EditPage,
+    VerifyEmailPage
 };
 
 export default container;

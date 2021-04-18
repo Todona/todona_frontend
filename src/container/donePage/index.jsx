@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import Card from "../../component/card";
 
 import UserService from "../../services/user.service";
+import useFullPageLoader from "../../hooks/useFullPageLoader";
 
 const DonePage = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [tasks, setTasks] = useState([]);
+
+  const [loader, showLoader, hideLoader] = useFullPageLoader();
 
   const fetchData = async () => {
     const res = await UserService.getDoneTasks();
@@ -17,6 +20,7 @@ const DonePage = () => {
   }, []);
 
   const onUnDone = async (id) => {
+    showLoader();
     try {
       await UserService.updateTasks(id, {
         isFinished: false
@@ -27,9 +31,11 @@ const DonePage = () => {
     } catch (err) {
       console.log(err);
     }
+    hideLoader();
   };
 
   const onDelete = async (id) => {
+    showLoader();
     try {
       await UserService.deleteTasks(id);
 
@@ -38,11 +44,13 @@ const DonePage = () => {
     } catch (err) {
       console.log(err);
     }
+    hideLoader();
   };
 
   return (
     <div className="TodoPage">
-      <h1 style={{ fontSize: "48px", margin: "0.5rem 0" }}>Done</h1>
+      <h1 style={{ fontSize: "48px", margin: "0.5rem 0", color: "white" }}>Done</h1>
+      <hr /> <br /> <br /> 
       <div className="card-container">
         {tasks.length !== 0 ? tasks.map((ele, i) => (
           <Card
@@ -56,6 +64,7 @@ const DonePage = () => {
           />
         )) : <p style={{ textAlign: "center" }}>You haven't done any task.</p>}
       </div>
+      {loader}
     </div>
   );
 };

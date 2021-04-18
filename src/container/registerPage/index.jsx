@@ -7,6 +7,7 @@ import { isEmail } from "validator";
 import "./register.css";
 import useFullPageLoader from "../../hooks/useFullPageLoader";
 
+import Spinner from "../../component/spinner";
 import AuthService from "../../services/auth.service";
 
 const required = value => {
@@ -50,15 +51,16 @@ const vpassword = value => {
 };
 
 const Register= () => {
+  const history = useHistory();
   const [form, setForm] = useState();
   const [checkBtn, setCheckBtn] = useState();
-  const history = useHistory();
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successful, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [loader, showLoader, hideLoader] = useFullPageLoader();
 
@@ -102,15 +104,16 @@ const Register= () => {
 
     setState("");
     await form.validateAll();
-    showLoader();
 
     if (checkBtn.context._errors.length === 0) {
+      setLoading(true);
       AuthService.register(
         username,
         email,
         password
       ).then(
         response => {
+          showLoader();
           setMessage(response.data.message);
           setSuccess(true);
 
@@ -126,6 +129,7 @@ const Register= () => {
             error.toString();
 
           setState(resMessage);
+          setLoading(false);
         }
       ).then(() => {
         hideLoader();
@@ -136,7 +140,7 @@ const Register= () => {
   }
   
   return (
-    <>
+    <div className="body">
       <div className="header">
         <i className="far fa-calendar-check" style={{fontSize: "80px"}}></i>&nbsp;&nbsp;TODONA
         <br /><hr />
@@ -219,10 +223,15 @@ const Register= () => {
               </div>
             )}
 
-            <div className="form-group">
-              <br />
-              <button className="btn btn-primary btn-block">Sign Up</button>
-            </div>
+            { loading ? (
+              <Spinner />
+            ) : (
+              <div className="form-group">
+                  <div className="form-group">
+                    <button className="btn btn-primary btn-block">Sign Up</button>
+                  </div>
+              </div>
+            )}
 
             <div className="link-page">
               Have an account ? 
@@ -239,7 +248,7 @@ const Register= () => {
         />
       </Form>
       {loader}
-    </>
+    </div>
   );
 }
 

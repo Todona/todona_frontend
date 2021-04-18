@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from "react-router-dom";
 import Form from "react-validation/build/form";
 import Input from  "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import "./login.css";
 
+import Spinner from "../../component/spinner";
 import AuthService from "../../services/auth.service";
+import useFullPageLoader from "../../hooks/useFullPageLoader";
 
 const required = value => {
     if (!value) {
@@ -17,47 +19,41 @@ const required = value => {
     }
 };
 
-export default class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.handleLogin = this.handleLogin.bind(this);
-        this.onChangeUsername = this.onChangeUsername.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+const Login= () => {
+    const history = useHistory();
+    const [form, setForm] = useState("");
+    const [checkBtn, setCheckBtn] = useState("");
+    const [username, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
-        this.state = {
-            username: "",
-            password: "",
-            loading: false,
-            message: ""
-        };
+    const [loader, showLoader, hideLoader] = useFullPageLoader();
+
+    const onChangeUsername = (e) => {
+        setMessage("");
+        setLoading(false);
+        setUserName(e.target.value);
     }
 
-    onChangeUsername(e) {
-        this.setState({
-            username: e.target.value
-        });
+    const onChangePassword = (e) => {
+        setMessage("");
+        setLoading(false);
+        setPassword(e.target.value);
     }
 
-    onChangePassword(e) {
-        this.setState({
-            password: e.target.value
-        });
-    }
-
-    handleLogin(e) {
+    const handleLogin = (e) => {
         e.preventDefault();
 
-        this.setState({
-            message: "",
-            loading: true
-        });
+        setMessage("");
+        form.validateAll();
 
-        this.form.validateAll();
-
-        if (this.checkBtn.context._errors.length === 0) {
-            AuthService.login(this.state.username, this.state.password)
+        if (checkBtn.context._errors.length === 0) {
+          setLoading(true);  
+          AuthService.login(username, password)
                 .then(() => {
-                    this.props.history.push("/");
+                    showLoader();
+                    history.push("/");
                     window.location.reload();
                 }, 
                 error => {
@@ -68,88 +64,93 @@ export default class Login extends Component {
                         error.message ||
                         error.toString();
                     
-                    this.setState({
-                        loading: false,
-                        message: resMessage
-                    });
+                    setLoading(false);
+                    setMessage(resMessage);
                 }
-            );
+            ).then(() => {
+              hideLoader();
+            });
         } else {
-            this.setState({
-                loading: false
-            })
+            setLoading(false);
+            hideLoader();
         }
     }
 
-    render() {
-        return (
-          <div>
-            <div className="login-header">
-            <i className="far fa-calendar-check" style={{fontSize: "80px"}}></i>&nbsp;&nbsp;TODONA
-            <br /><hr />
+      return (
+        <div className="body">
+          <div className="login-header">
+          <i className="far fa-calendar-check" style={{fontSize: "80px"}}></i>&nbsp;&nbsp;TODONA
+          <br /><hr />
+          </div>
+          <Form class="login"
+            onSubmit={handleLogin}
+            ref={c => {
+              setForm(c);
+            }}
+          >
+            <h1>Login</h1>
+            <br />
+            <hr />
+            <br />
+            <div className="form-group">
+              <Input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={username}
+                onChange={onChangeUsername}
+                validations={[required]}
+              />
             </div>
-            <Form class="login"
-              onSubmit={this.handleLogin}
-              ref={c => {
-                this.form = c;
-              }}
-            >
-              <h1>Login</h1>
-              <br />
-              <hr />
-              <br />
-              <div className="form-group">
-                <Input
-                  type="text"
-                  name="username"
-                  placeholder="Username"
-                  value={this.state.username}
-                  onChange={this.onChangeUsername}
-                  validations={[required]}
-                />
-              </div>
-  
-              <div className="form-group">
-                <Input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.onChangePassword}
-                  validations={[required]}
-                />
-              </div>
-  
+
+            <div className="form-group">
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={onChangePassword}
+                validations={[required]}
+              />
+            </div>
+
+              {message && (
+                <div className="form-group">
+                  <div className="alert alert-danger" role="alert">
+                    {message}
+                  </div>
+                </div>
+              )}
+
+            { loading ? (
+              <Spinner />
+            ) : (
               <div className="form-group">
                 <button
-                  disabled={this.state.loading}
+                  disabled={loading}
                 >
-                  {this.state.loading && (
+                  {loading && (
                     <span className="spinner-border spinner-border-sm"></span>
                   )}
                   <span>Login</span>
                 </button>
               </div>
-  
-              {this.state.message && (
-                <div className="form-group">
-                  <div className="alert alert-danger" role="alert">
-                    {this.state.message}
-                  </div>
-                </div>
-              )}
-              <CheckButton
-                style={{ display: "none" }}
-                ref={c => {
-                  this.checkBtn = c;
-                }}
-              />
-              <div className="link-page">
-                Don't have an account ? 
-                <Link to="/register" className="brand">Sign up</Link>
-              </div>
-            </Form>
-          </div>
-        );
-    }
+            )}
+
+            <CheckButton
+              style={{ display: "none" }}
+              ref={c => {
+                setCheckBtn(c);
+              }}
+            />
+            <div className="link-page">
+              Don't have an account ? 
+              <Link to="/register" className="brand">Sign up</Link>
+            </div>
+          </Form>
+          {loader}
+        </div>
+      );
 }
+
+export default Login;

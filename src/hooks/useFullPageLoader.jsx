@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FullPageLoader from "../component/FullPageLoader";
 
 const useFullPageLoader = () => {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     return [
         loading ? <FullPageLoader /> : null,
