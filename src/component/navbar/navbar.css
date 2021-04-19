@@ -48,20 +48,21 @@
 .navbar .content .create-button {
   font-size: 16px;
   height: 30px;
-  background-color: #067bf9;
+  border: 2px solid #00F494;
+  background: none;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   transition: all ease-in-out 150ms;
   padding: 0 1rem;
   font-weight: bold;
 }
 
 .navbar .content .create-button:hover {
-  background-color: #459dfc;
+  color: #3498db;
+  background-color: #00F494;
 }
 
 .navbar .content .create-button:focus {

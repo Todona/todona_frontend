@@ -4,7 +4,7 @@ import './spinner.css'
 
 const Spinner = () => {
     return (
-        <div className="container">
+        <div className="spinner">
             <img style={{sizes: "small"}} src={spinner} alt="loading" />
         </div>
     )

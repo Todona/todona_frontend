@@ -43,13 +43,16 @@ const Navbar = () => {
         <div className="navbar">
           <div className="content">
             <div className="link-page">
-              <Link to="/" className="brand"><i className="far fa-calendar-check" style={{fontSize: "22px"}}></i>&nbsp;&nbsp;TODONA</Link>
-              <Link to="/" onClick={() => setMode(0)} style={mode === "/" ? { color: "#009BFF" } : null}>Todo</Link>
-              <Link to="/done" onClick={() => setMode(1)} style={mode === "/done" ? { color: "#009BFF" } : null}>Done</Link>
+              <Link to="/" onClick={() => setMode(0)} className="brand"><i className="far fa-calendar-check" style={{fontSize: "22px"}}></i>&nbsp;&nbsp;TODONA</Link>
+              <Link to="/" onClick={() => setMode(1)} style={mode === "/" ? { color: "#009BFF" } : null}>Todo</Link>
+              <Link to="/done" onClick={() => setMode(2)} style={mode === "/done" ? { color: "#009BFF" } : null}>Done</Link>
             </div>
             <div className="link-page">
-               <Link to="/create" onClick={() => setMode(5)}><button className="create-button">New Task</button></Link>
-               <Link to="/contact" onClick={() => setMode(2)} style={mode === "/contact" ? { color: "#009BFF" } : null}>Contact</Link>
+              <Link to="/" onClick={() => setMode(3)} className="brand"><i className="far fa-user" style={{fontSize: "22px"}}></i>&nbsp;&nbsp;{currentUser.username}</Link>
+            </div>
+            <div className="link-page">
+               <Link to="/create" onClick={() => setMode(4)}><button className="create-button">New Task</button></Link>
+               <Link to="/contact" onClick={() => setMode(5)} style={mode === "/contact" ? { color: "#009BFF" } : null}>Contact</Link>
                <Link to="/login" onClick={() => logOut()}>Log out</Link>
             </div>
           </div>
