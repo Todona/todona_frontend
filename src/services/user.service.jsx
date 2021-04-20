@@ -14,7 +14,7 @@ class UserService {
     }
 
     findByTask(task, isFinished) {
-        return axios.get(`?task=${task}&isFinished=${isFinished}`);
+        return axios.get(API_URL + `?task=${task}&isFinished=${isFinished}`, { headers: authHeader() });
     }
 
     getDoneTasks() {
