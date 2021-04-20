@@ -7,7 +7,7 @@ const ContactPage = () => {
       <h1 style={{ fontSize: "48px", margin: "0.5rem 0", color: "white" }}>Contact</h1>
       <hr /> <br /> <br />
       <div className="pic" style={{ textAlign: "center" }}>
-          <img src="https://lh3.googleusercontent.com/yyNAMKLwuNTxvmwzU3d5qBeb9fE1xjuCDlGIY8ghW6L66FiWlt5ElYxjsfUSF4XwmDCkFLprCGqse8NCJtt1oB9tCVnHd6fil01gvtBZgD7lk954Fxso0pHYCCfYKZfj_IQBzYjNscQ32Hw7xAPB_uGQwIZXz2KaeVvfQvhqeoKn_nebZAIbbgf2KZlb-vhCTHHsQuCJwhasE2wRj0fwruJBRweUgiJo023iTJHLiZcxRh53F6sAKZZZLuP1tHraj8Z7MrnmPxAtOTUv28tPDPGvZ1daxLMnydIeEngJLYjDWqclF5eV8gXsetg0oTMOD0AqyukToJ-dN0ETgnZJ5hVM1O5utw-e0f5mcF2vFKr8ZRQIH3SXEY-wSnL7UdcNiT1BlKBxWeDpNrTLTbKVnVKogBulJBllvdCyIShLg7p1bT8063Wr0Hr2Xx_cehst85RmH17MuxKVT0NeTnZKXGk-DoxPXBkfDW4pscmLKqDYEPysy4fh3uruZ1Bxqp1cng5lSe4ihWOIqU3G_kQOa8yYmPbMR7cL6bRTLeTGLwiSkgKw6rdRPZZZhQmRW0DtQPgsLTvBhHX0wZz0RuRVDcJY_bDuV6ALNqW9V1ok_dBXZPjx1CjXzeI1x6IdZGVkYE3DXh0S5FzB3rILKj5qWKsyNKf0xe7NPnESof-MnrOrzaUYT1psNUAWLFDf765K8WquaYr4FZy8MnFegtKlosW7=s1008-no?authuser=2" alt="profile-pic"
+          <img src="https://raw.githubusercontent.com/Todona/todona_frontend/master/src/assets/images/profile.jpg" alt="profile-pic"
           style={{
             borderRadius: "50%",
             "width": "60%",
