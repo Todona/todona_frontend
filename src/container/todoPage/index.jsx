@@ -68,6 +68,18 @@ const TodoPage = () => {
     }
   }
 
+  async function searchTask(task) {
+    console.log("Search")
+    await UserService.findByTask(task, true)
+      .then(response => {
+        setTasks(response.data);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
   return (
     <div className="TodoPage">
       <div className="parent">
@@ -77,7 +89,7 @@ const TodoPage = () => {
           </h1>
         </div>
         <div className="column">
-          <SearchBar />
+          <SearchBar searchTask={searchTask} />
         </div>
       </div>
       <hr /> <br /> <br />  

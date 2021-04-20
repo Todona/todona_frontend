@@ -13,6 +13,10 @@ class UserService {
         return axios.get(API_URL + `/${id}`, { headers: authHeader() });
     }
 
+    findByTask(task, isFinished) {
+        return axios.get(`?task=${task}&isFinished=${isFinished}`);
+    }
+
     getDoneTasks() {
         return axios.get(API_URL + '?isFinished=true', { headers: authHeader() });
     }
