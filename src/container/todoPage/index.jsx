@@ -85,7 +85,7 @@ const TodoPage = () => {
   }
 
   async function searchTask(task) {
-    const newTasks = allTask.filter(ele => ele.task.includes(task));
+    const newTasks = allTask.filter(ele => ele.task.toLowerCase().includes(task.toLowerCase()));
     setTasks(newTasks);
     // if (task != "") {
     //   await UserService.findByTask(task, true)
