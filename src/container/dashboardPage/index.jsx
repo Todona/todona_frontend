@@ -21,9 +21,12 @@ const TodoPage = () => {
     const done = await UserService.getDoneTasks();
     setDoneCount(done.data.length);
 
-    const p = Math.round(done.data.length/(todo.data.length + done.data.length) * 10000) / 100;
-
-    setPercents(p);
+    if (todo.data.length + done.data.length != 0) {
+        const p = Math.round(done.data.length/(todo.data.length + done.data.length) * 10000) / 100;
+        setPercents(p);
+    } else {
+        setPercents(0);
+    }
     setAllCount(done.data.length + todo.data.length);
     hideLoader();
   };
