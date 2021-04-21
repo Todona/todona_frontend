@@ -72,33 +72,10 @@ const TodoPage = () => {
     }
     hideLoader();
   }
-
-  async function onSetDate(newDate) {
-    try {
-      console.log("date" + expire, "new date" + newDate, expire != newDate);
-      const newExpire = newDate;
-      setExpire(newExpire);
-      console.log("date" + newExpire);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
+  
   async function searchTask(task) {
     const newTasks = allTask.filter(ele => ele.task.toLowerCase().includes(task.toLowerCase()));
     setTasks(newTasks);
-    // if (task != "") {
-    //   await UserService.findByTask(task, true)
-    //   .then(response => {
-    //     setTasks(response.data);
-    //     console.log(response.data);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
-    // } else {
-    //   fetchData();
-    //}
   }
 
   return (
@@ -115,13 +92,14 @@ const TodoPage = () => {
       </div>
       <hr /> <br /> <br />  
       <div className="card-container">
-        {tasks.length !== 0 ? tasks.map((ele, i) => (
+        {tasks.length !== 0 ? tasks.map((ele, i, root) => (
           <>
-            <DateBar 
-              newDate={new Date(ele.time).toLocaleString([], {dateStyle: "long"})} 
-              date={expire} 
-              onSetDate={onSetDate} 
-            />
+            { i === 0 || new Date(ele.time).toLocaleString([], {dateStyle: "long"}) !== new Date(root[i-1].time).toLocaleString([], {dateStyle: "long"}) ?
+              <DateBar 
+                date={new Date(ele.time).toLocaleString([], {dateStyle: "long"})}
+              />
+              : null
+            }
             <Card
               mode={"default"}
               onDone={() => onDone(ele._id)}

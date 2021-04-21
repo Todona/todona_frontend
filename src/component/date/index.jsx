@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-const DateBar = ({newDate, date, onSetDate, }) => {
-
-    function fetchData() {
-        onSetDate(newDate);
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, [])
+const DateBar = ({ date }) => {
 
     return (
         <>
-            <h1>{newDate}</h1>
+            <h1>{date}</h1>
             <br />
         </>
     )
