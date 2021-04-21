@@ -18,6 +18,7 @@
     .progress h2 {
         padding-left: 150px;
         color: #689cc5;
+        text-shadow: 2px 2px 5px #0300b1;
     }
     .progress h3 {
         text-align:right;
@@ -25,6 +26,7 @@
         float:center;
         padding-right: 150px;
         color: #689cc5;
+        text-shadow: 2px 2px 5px #0300b1;
     }
     .parent {
         display: flex;
@@ -44,14 +46,29 @@
         cursor: pointer;
         background: white;
         align-items: center;
+        text-shadow: 5px 5px 5px #eeb440;
+    }
+    #todo{
+        background: url(https://raw.githubusercontent.com/Todona/todona_frontend/master/src/assets/images/todo.jpg) no-repeat 0 0%;
+        background-size: cover;
+        padding-bottom: height_of_image_in_px;
+    }
+    #done{
+        background: url(https://raw.githubusercontent.com/Todona/todona_frontend/master/src/assets/images/done.png) no-repeat 0 0%;
+        background-size: cover;
+        padding-bottom: height_of_image_in_px;
     }
     .parent .column .card h1{
         font-size: 150px;
+        color: #dd8437;
     }
     .parent .column .card h2{
         padding-top: 50px;
         font-size: 30px;
-        color: #689cc5;
+        color: #dd8437;
+    }
+    .parent .column .card img{
+        width: 100%;
     }
     .parent .column .detail {
         width: 100%;
