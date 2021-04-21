@@ -12,7 +12,8 @@ const TodoPage = () => {
   const history = useHistory();
   const [selectedCard, setSelectedCard] = useState(null);
   const [tasks, setTasks] = useState([]);
-  const [date, setDate] = useState("2020");
+  const [allTask, setAllTask] = useState([]);
+  const [expire, setExpire] = useState("");
   const [count, setCount] = useState(0);
   
   const [loader, showLoader, hideLoader] = useFullPageLoader();
@@ -21,6 +22,7 @@ const TodoPage = () => {
     showLoader();
     const res = await UserService.getAllTasks();
     setTasks(res.data);
+    setAllTask(res.data);
     setCount(res.data.length);
     hideLoader();
   };
@@ -34,6 +36,7 @@ const TodoPage = () => {
   };
 
   const onDone = async (id) => {
+    showLoader();
     try {
       await UserService.updateTasks(id, {
         isFinished: true
@@ -41,43 +44,61 @@ const TodoPage = () => {
 
       const newTasks = tasks.filter(ele => ele._id !== id);
       setTasks(newTasks);
-      setCount(newTasks.length);
+
+      const newAllTask = allTask.filter(ele => ele._id !== id);
+      setAllTask(newAllTask);
+
+      setCount(newAllTask.length);
     } catch (err) {
       console.log(err);
     }
+    hideLoader();
   }
 
   const onDelete = async (id) => {
+    showLoader();
     try {
       await UserService.deleteTasks(id);
 
       const newTasks = tasks.filter(ele => ele._id !== id);
       setTasks(newTasks);
-      setCount(newTasks.length);
+
+      const newAllTask = allTask.filter(ele => ele._id !== id);
+      setAllTask(newAllTask);
+      
+      setCount(newAllTask.length);
     } catch (err) {
       console.log(err);
     }
+    hideLoader();
   }
 
   async function onSetDate(newDate) {
     try {
-      console.log("date" + date, "new date" + newDate, date != newDate);
-      await setDate(newDate);
+      console.log("date" + expire, "new date" + newDate, expire != newDate);
+      const newExpire = newDate;
+      setExpire(newExpire);
+      console.log("date" + newExpire);
     } catch (err) {
       console.log(err);
     }
   }
 
   async function searchTask(task) {
-    console.log("Search")
-    await UserService.findByTask(task, true)
-      .then(response => {
-        setTasks(response.data);
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    const newTasks = allTask.filter(ele => ele.task.includes(task));
+    setTasks(newTasks);
+    // if (task != "") {
+    //   await UserService.findByTask(task, true)
+    //   .then(response => {
+    //     setTasks(response.data);
+    //     console.log(response.data);
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //   });
+    // } else {
+    //   fetchData();
+    //}
   }
 
   return (
@@ -93,13 +114,12 @@ const TodoPage = () => {
         </div>
       </div>
       <hr /> <br /> <br />  
-      {loader}
       <div className="card-container">
         {tasks.length !== 0 ? tasks.map((ele, i) => (
           <>
             <DateBar 
               newDate={new Date(ele.time).toLocaleString([], {dateStyle: "long"})} 
-              date={date} 
+              date={expire} 
               onSetDate={onSetDate} 
             />
             <Card
@@ -115,6 +135,7 @@ const TodoPage = () => {
           </>
         )) : <p style={{ textAlign: "center", color: "white" }}>Hooray! You have no more task todo.</p>}
       </div>
+      {loader}
     </div>
   );
 };

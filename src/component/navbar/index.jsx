@@ -44,7 +44,7 @@ const Navbar = () => {
           <div className="content">
             <div className="link-page">
               <Link to="/" onClick={() => setMode(0)} className="brand"><i className="far fa-calendar-check" style={{fontSize: "22px"}}></i>&nbsp;&nbsp;TODONA</Link>
-              <Link to="/" onClick={() => setMode(1)} style={mode === "/" ? { color: "#009BFF" } : null}>Todo</Link>
+              <Link to="/todo" onClick={() => setMode(1)} style={mode === "/todo" ? { color: "#009BFF" } : null}>Todo</Link>
               <Link to="/done" onClick={() => setMode(2)} style={mode === "/done" ? { color: "#009BFF" } : null}>Done</Link>
             </div>
             <div className="link-page">

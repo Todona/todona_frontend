@@ -9,6 +9,7 @@ import useFullPageLoader from "../../hooks/useFullPageLoader";
 const DonePage = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [tasks, setTasks] = useState([]);
+  const [allTask, setAllTask] = useState([]);
   const [date, setDate] = useState("2020");
   const [count, setCount] = useState(0);
 
@@ -18,6 +19,7 @@ const DonePage = () => {
     showLoader();
     const res = await UserService.getDoneTasks();
     setTasks(res.data);
+    setAllTask(res.data);
     setCount(res.data.length);
     hideLoader();
   };
@@ -35,7 +37,11 @@ const DonePage = () => {
 
       const newTasks = tasks.filter(ele => ele._id !== id);
       setTasks(newTasks);
-      setCount(newTasks.length);
+
+      const newAllTask = allTask.filter(ele => ele._id !== id);
+      setAllTask(newAllTask);
+
+      setCount(newAllTask.length);
     } catch (err) {
       console.log(err);
     }
@@ -49,7 +55,11 @@ const DonePage = () => {
 
       const newTasks = tasks.filter(ele => ele._id !== id);
       setTasks(newTasks);
-      setCount(newTasks.length);
+      
+      const newAllTask = allTask.filter(ele => ele._id !== id);
+      setAllTask(newAllTask);
+      
+      setCount(newAllTask.length);
     } catch (err) {
       console.log(err);
     }
@@ -66,15 +76,17 @@ const DonePage = () => {
   }
 
   async function searchTask(task) {
-    console.log("Search")
-    await UserService.findByTask(task, true)
-      .then(response => {
-        setTasks(response.data);
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    const newTasks = allTask.filter(ele => ele.task.includes(task));
+    setTasks(newTasks);
+    // console.log("Search")
+    // await UserService.findByTask(task, true)
+    //   .then(response => {
+    //     setTasks(response.data);
+    //     console.log(response.data);
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //   });
   }
 
   return (

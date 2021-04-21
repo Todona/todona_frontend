@@ -45,7 +45,8 @@ export default function App()  {
           <ProtectedLogin exact path="/login" component={container.LoginPage} />
           <ProtectedLogin exact path="/register" component={container.RegisterPage} />
           <ProtectedLogin exact path="/verify-email" component={container.VerifyEmailPage} />
-          <ProtectedRoute exact path={"/"} component={container.TodoPage} />
+          <ProtectedRoute exact path={"/"} component={container.dashboardPage} />
+          <ProtectedRoute exact path={"/todo"} component={container.TodoPage} />
           <ProtectedRoute exact path={"/done"} component={container.DonePage} />
           <ProtectedRoute exact path={"/contact"} component={container.ContactPage} />
           <ProtectedRoute exact path={"/create"} component={container.CreatePage} />
