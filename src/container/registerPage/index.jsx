@@ -115,6 +115,7 @@ export default class Register extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
+      this.setState({ loading: true }) ;
       AuthService.register(
         this.state.username,
         this.state.email,
@@ -140,7 +141,8 @@ export default class Register extends Component {
 
           this.setState({
             successful: false,
-            message: resMessage
+            message: resMessage,
+            loading: false
           });
         }
       );
