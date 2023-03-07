@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = 'https://backendtodona.herokuapp.com/api/auth/';
+const API_URL = 'https://maskvivid-thxx3o.stormkit.dev/api/auth/';
 //const API_URL = 'http://localhost:4000/api/auth/';
 
 class AuthService {
