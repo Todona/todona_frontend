@@ -4,7 +4,10 @@ export default function authHeader() {
     if (user && user.accessToken) {
         return {
             'x-access-token': user.accessToken,
-            'Access-Control-Allow-Origin' : '*'
+            'Access-Control-Allow-Origin' : '*',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Methods': 'GET, POST',
+            'Access-Control-Allow-Headers': 'Content-Type'
         };
     } else {
         return {};
