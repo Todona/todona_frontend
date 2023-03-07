@@ -1,4 +1,5 @@
 import axios from "axios";
+import authHeader from './auth-header';
 
 const API_URL = 'https://maskvivid-thxx3o.stormkit.dev/api/auth/';
 //const API_URL = 'http://localhost:4000/api/auth/';
@@ -9,7 +10,7 @@ class AuthService {
         return axios.post(API_URL + 'signin', {
             username, 
             password
-        })
+        }, { headers: authHeader() })
         .then(response => {
             if (response.data.accessToken) {
                 localStorage.setItem("user", JSON.stringify(response.data));
@@ -28,7 +29,7 @@ class AuthService {
             username,
             email,
             password
-        });
+        }, { headers: authHeader() });
     }
 
     getCurrentUser() {
