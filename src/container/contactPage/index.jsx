@@ -7,7 +7,7 @@ const ContactPage = () => {
       <h1 style={{ fontSize: "48px", margin: "0.5rem 0", color: "white" }}>Contact</h1>
       <hr /> <br /> <br />
       <div className="pic" style={{ textAlign: "center" }}>
-          <img src="https://raw.githubusercontent.com/Todona/todona_frontend/master/src/assets/images/profile.jpg" alt="profile-pic"
+          <img src="https://photos.app.goo.gl/AsGnxPoCv7p7eVyT6" alt="profile-pic"
           style={{
             borderRadius: "50%",
             "width": "60%",
